@@ -1,0 +1,22 @@
+{
+  "name": "pulseboard",
+  "version": "1.0.0",
+  "description": "Collaborative operations platform backend powered by Express and Redis.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "worker": "node src/workers/jobWorker.js",
+    "consumer": "node src/workers/eventConsumer.js",
+    "scheduler": "node src/scheduler/scheduler.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "ioredis": "^5.4.1",
+    "uuid": "^9.0.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "private": true
+}

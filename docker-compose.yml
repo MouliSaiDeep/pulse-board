@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: pulseboard-redis
+    ports:
+      - "6379:6379"
+
+  api:
+    build: .
+    container_name: pulseboard-api
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    command: node src/index.js
+
+  worker:
+    build: .
+    container_name: pulseboard-worker
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    command: node src/workers/jobWorker.js
+
+  consumer:
+    build: .
+    container_name: pulseboard-consumer
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    command: node src/workers/eventConsumer.js
+
+  scheduler:
+    build: .
+    container_name: pulseboard-scheduler
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    command: node src/scheduler/scheduler.js
