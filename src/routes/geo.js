@@ -51,7 +51,7 @@ router.get('/nearby', async (req, res, next) => {
     const results = await redis.call(
       'GEOSEARCH',
       'geo:active_users',
-      'FROMPNT',
+      'FROMLONLAT',
       lng,
       lat,
       'BYRADIUS',
